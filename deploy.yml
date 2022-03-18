@@ -1,0 +1,40 @@
+version: '3.8'
+services:
+  backend:
+    image: jonatasflima/tcc-match:prod
+    environment:
+      - PROFILE=prod
+      - DB_URL=jdbc:postgresql://db:5432/tcc_match
+    ports:
+      - 8080:8080
+    depends_on:
+      - db
+    deploy:
+      mode: global
+      restart_policy:
+        condition: on-failure
+    networks:
+      - tcc_match_network
+
+  db:
+    image: jonatasflima/tcc-match-db:latest
+    ports:
+      - 5432:5432
+    volumes:
+      - tcc_match_data:/var/lib/postgresql/data
+    deploy:
+      mode: global
+      restart_policy:
+        condition: on-failure
+    networks:
+      - tcc_match_network
+
+volumes:
+  tcc_match_data:
+
+secrets:
+  tcc_match_db_password:
+    external: true
+
+networks:
+  tcc_match_network:

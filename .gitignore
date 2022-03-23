@@ -6,6 +6,7 @@ private
 *.tfstate**
 *.plan
 *.lock*
+terraform.apply
 
 # env
 *.env*

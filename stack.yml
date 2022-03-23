@@ -6,8 +6,6 @@ services:
       - backend.env
     ports:
       - 80:8080
-    depends_on:
-      - db
     deploy:
       mode: global
       restart_policy:

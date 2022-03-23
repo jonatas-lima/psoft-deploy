@@ -46,6 +46,10 @@ resource "aws_route_table" "deploy-rt" {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.deploy-gw.id
   }
+
+  tags = {
+    "Name" = "deploy route table"
+  }
 }
 
 resource "aws_route_table_association" "deploy-public-1-a" {

@@ -51,6 +51,5 @@
 - Ao entrar na pasta `terraform` e executar `terraform apply`, a infraestrutura descrita em HCL será totalmente provisionada e a aplicação também estará rodando no IP que será mostrado na tela após o provisionamento.
 
 ## Referências
----
 - Documentação do [Terraform + AWS](https://registry.terraform.io/providers/hashicorp/aws/latest/docs)
 - Documentação do [Docker](https://docs.docker.com/), especificamente a do [Docker Swarm](https://docs.docker.com/get-started/orchestration/#enable-docker-swarm)

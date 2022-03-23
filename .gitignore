@@ -1,0 +1,11 @@
+# terraform
+
+.terraform
+*.tfvars
+private
+*.tfstate**
+*.plan
+*.lock*
+
+# env
+*.env*

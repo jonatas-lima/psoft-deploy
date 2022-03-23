@@ -1,12 +1,11 @@
 version: '3.8'
 services:
   backend:
-    image: jonatasflima/tcc-match:prod
-    environment:
-      - PROFILE=prod
-      - DB_URL=jdbc:postgresql://db:5432/tcc_match
+    image: jonatasflima/tcc-match-backend:latest
+    env_file:
+      - backend.env
     ports:
-      - 8080:8080
+      - 80:8080
     depends_on:
       - db
     deploy:
@@ -17,9 +16,11 @@ services:
       - tcc_match_network
 
   db:
-    image: jonatasflima/tcc-match-db:latest
+    image: postgres:11.14
     ports:
       - 5432:5432
+    env_file:
+      - db.env
     volumes:
       - tcc_match_data:/var/lib/postgresql/data
     deploy:
@@ -31,10 +32,6 @@ services:
 
 volumes:
   tcc_match_data:
-
-secrets:
-  tcc_match_db_password:
-    external: true
 
 networks:
   tcc_match_network:

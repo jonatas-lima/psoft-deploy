@@ -11,7 +11,6 @@
 - Para rodar a aplicação: Docker + Docker swarm
 
 ## Setup inicial
----
 - A princípio, [configurei a chave e o id de acesso](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html) na `aws cli`
 - Após isso, armazenei os arquivos essenciais (data.sql, stack.sql, db.env e backend.env) em um bucket S3 na AWS.
   - Dá pra fazer isso via cli, com o comando 
@@ -28,7 +27,6 @@
   ```
 
 ## Estrutura do projeto
----
 
 ### Cloud Provider
 - `provider.tf`: Define o cloud provider a ser utilizado pelo projeto. Nesse caso, foi utilizada a AWS.
@@ -50,7 +48,6 @@
 - `ec2.tf`: Define as configurações da instância EC2 a ser provisionada. Também é passado um script de provisionamento, que é executado durante o processo de subir a instância.
 
 ## Rodando o projeto
----
 - Ao entrar na pasta `terraform` e executar `terraform apply`, a infraestrutura descrita em HCL será totalmente provisionada e a aplicação também estará rodando no IP que será mostrado na tela após o provisionamento.
 
 ## Referências

@@ -253,7 +253,8 @@ CREATE TABLE migrations.tcc (
     term character varying(255),
     title character varying(255),
     advised_student_id bigint,
-    advisor_id bigint
+    advisor_id bigint,
+    author_id bigint
 );
 
 
@@ -340,6 +341,18 @@ CREATE TABLE migrations.tccmatch_user_orientation_issues (
 ALTER TABLE migrations.tccmatch_user_orientation_issues OWNER TO tcc_match;
 
 --
+-- Name: tccmatch_user_registeredtccs; Type: TABLE; Schema: migrations; Owner: tcc_match
+--
+
+CREATE TABLE migrations.tccmatch_user_registeredtccs (
+    tccmatch_user_id bigint NOT NULL,
+    registeredtccs_id bigint NOT NULL
+);
+
+
+ALTER TABLE migrations.tccmatch_user_registeredtccs OWNER TO tcc_match;
+
+--
 -- Data for Name: admin; Type: TABLE DATA; Schema: migrations; Owner: tcc_match
 --
 
@@ -353,10 +366,10 @@ COPY migrations.admin (id) FROM stdin;
 --
 
 COPY migrations.flyway_schema_history (installed_rank, version, description, type, script, checksum, installed_by, installed_on, execution_time, success) FROM stdin;
-0	\N	<< Flyway Schema Creation >>	SCHEMA	"migrations"	\N	tcc_match	2022-03-23 11:23:01.083687	0	t
-1	1.1	create tables	SQL	V1_1__create_tables.sql	1853059054	tcc_match	2022-03-23 11:23:22.573062	24	t
-2	1.2	alter tables	SQL	V1_2__alter_tables.sql	471952435	tcc_match	2022-03-23 11:23:22.610808	26	t
-3	2	add first admin	SQL	V2__add_first_admin.sql	-689210172	tcc_match	2022-03-23 11:23:22.642791	1	t
+0	\N	<< Flyway Schema Creation >>	SCHEMA	"migrations"	\N	tcc_match	2022-03-25 17:21:54.499639	0	t
+1	1.1	create tables	SQL	V1_1__create_tables.sql	-1720561289	tcc_match	2022-03-25 17:21:54.517048	11	t
+2	1.2	alter tables	SQL	V1_2__alter_tables.sql	1622302534	tcc_match	2022-03-25 17:21:54.539762	25	t
+3	2	add first admin	SQL	V2__add_first_admin.sql	-689210172	tcc_match	2022-03-25 17:21:54.570682	2	t
 \.
 
 
@@ -436,7 +449,7 @@ COPY migrations.study_area (id, description) FROM stdin;
 -- Data for Name: tcc; Type: TABLE DATA; Schema: migrations; Owner: tcc_match
 --
 
-COPY migrations.tcc (id, description, tcc_status, term, title, advised_student_id, advisor_id) FROM stdin;
+COPY migrations.tcc (id, description, tcc_status, term, title, advised_student_id, advisor_id, author_id) FROM stdin;
 \.
 
 
@@ -470,6 +483,14 @@ COPY migrations.tccmatch_user_emails (tccmatch_user_id, emails) FROM stdin;
 --
 
 COPY migrations.tccmatch_user_orientation_issues (tccmatch_user_id, orientation_issues_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: tccmatch_user_registeredtccs; Type: TABLE DATA; Schema: migrations; Owner: tcc_match
+--
+
+COPY migrations.tccmatch_user_registeredtccs (tccmatch_user_id, registeredtccs_id) FROM stdin;
 \.
 
 
@@ -536,6 +557,14 @@ ALTER TABLE ONLY migrations.tcc
 
 ALTER TABLE ONLY migrations.study_area
     ADD CONSTRAINT constraint_2 PRIMARY KEY (id);
+
+
+--
+-- Name: tccmatch_user_registeredtccs constraint_27; Type: CONSTRAINT; Schema: migrations; Owner: tcc_match
+--
+
+ALTER TABLE ONLY migrations.tccmatch_user_registeredtccs
+    ADD CONSTRAINT constraint_27 PRIMARY KEY (tccmatch_user_id, registeredtccs_id);
 
 
 --
@@ -619,6 +648,14 @@ ALTER TABLE ONLY migrations.flyway_schema_history
 
 
 --
+-- Name: tccmatch_user_registeredtccs uk_lm7ijmmq9julnh3jlgcfpvjeq; Type: CONSTRAINT; Schema: migrations; Owner: tcc_match
+--
+
+ALTER TABLE ONLY migrations.tccmatch_user_registeredtccs
+    ADD CONSTRAINT uk_lm7ijmmq9julnh3jlgcfpvjeq UNIQUE (registeredtccs_id);
+
+
+--
 -- Name: tccmatch_user_orientation_issues uk_m2dwgqfapuds46fj84tfbgg20; Type: CONSTRAINT; Schema: migrations; Owner: tcc_match
 --
 
@@ -679,6 +716,14 @@ ALTER TABLE ONLY migrations.tcc_study_areas
 
 ALTER TABLE ONLY migrations.tcc_study_areas
     ADD CONSTRAINT fk8m8vu79k3jijvy77sc3vlrihw FOREIGN KEY (study_area_id) REFERENCES migrations.study_area(id);
+
+
+--
+-- Name: tccmatch_user_registeredtccs fk96gmsbos79y778p3e27uh4v3j; Type: FK CONSTRAINT; Schema: migrations; Owner: tcc_match
+--
+
+ALTER TABLE ONLY migrations.tccmatch_user_registeredtccs
+    ADD CONSTRAINT fk96gmsbos79y778p3e27uh4v3j FOREIGN KEY (tccmatch_user_id) REFERENCES migrations.tccmatch_user(id);
 
 
 --
@@ -754,6 +799,14 @@ ALTER TABLE ONLY migrations.orientation_issue
 
 
 --
+-- Name: tccmatch_user_registeredtccs fkje55mt854nbc28plfuhpgypit; Type: FK CONSTRAINT; Schema: migrations; Owner: tcc_match
+--
+
+ALTER TABLE ONLY migrations.tccmatch_user_registeredtccs
+    ADD CONSTRAINT fkje55mt854nbc28plfuhpgypit FOREIGN KEY (registeredtccs_id) REFERENCES migrations.tcc(id);
+
+
+--
 -- Name: professor_interested_study_areas fkjm88tnppo0gfbivxd3a6mijac; Type: FK CONSTRAINT; Schema: migrations; Owner: tcc_match
 --
 
@@ -799,6 +852,14 @@ ALTER TABLE ONLY migrations.professor
 
 ALTER TABLE ONLY migrations.professor_interestedtccs
     ADD CONSTRAINT fkrxhls49emfsujx1iitwwppa7r FOREIGN KEY (tcc_id) REFERENCES migrations.tcc(id);
+
+
+--
+-- Name: tcc fkshumb2axh3u4l3v31wo1kd909; Type: FK CONSTRAINT; Schema: migrations; Owner: tcc_match
+--
+
+ALTER TABLE ONLY migrations.tcc
+    ADD CONSTRAINT fkshumb2axh3u4l3v31wo1kd909 FOREIGN KEY (author_id) REFERENCES migrations.tccmatch_user(id);
 
 
 --

@@ -1,7 +1,5 @@
 #!/bin/bash
 
-sudo apt update && sudo apt install -y wget curl
-
 curl https://get.docker.com | bash
 
 sudo usermod -aG docker $USER
@@ -20,7 +18,7 @@ sudo docker swarm init
 sudo docker stack deploy -c $APP_PATH/stack.yml deploy
 
 # timeout pro container subir
-sleep 60
+sleep 45
 
 db_container_id=$(sudo docker ps | grep deploy_db | cut -d' ' -f1)
 

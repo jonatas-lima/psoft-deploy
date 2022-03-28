@@ -9,4 +9,4 @@ private
 terraform.apply
 
 # env
-*.env*
+*.env
